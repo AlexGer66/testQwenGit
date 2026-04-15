@@ -5,9 +5,9 @@ $filter = isset($_GET['filter']) ? $_GET['filter'] : 'all';
 
 $sql = "SELECT * FROM tasks";
 if ($filter === 'active') {
-    $sql .= " WHERE status != 'done'";
+    $sql .= " WHERE status = 0";
 } elseif ($filter === 'done') {
-    $sql .= " WHERE status = 'done'";
+    $sql .= " WHERE status = 1";
 }
 $sql .= " ORDER BY created_at DESC";
 
@@ -39,28 +39,31 @@ $tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         <ul class="task-list">
             <?php foreach ($tasks as $task): ?>
-                <li class="task-item <?= $task['status'] === 'done' ? 'completed' : '' ?>">
+                <!-- Если статус 1, добавляем класс completed для зачеркивания -->
+                <li class="task-item <?= $task['status'] == 1 ? 'completed' : '' ?>">
                     <div class="task-content">
                         <h3><?= htmlspecialchars($task['title']) ?></h3>
                         <p><?= htmlspecialchars($task['description']) ?></p>
                         <small><?= $task['created_at'] ?></small>
                     </div>
                     <div class="task-actions">
-                        <?php if ($task['status'] !== 'done'): ?>
+                        <?php if ($task['status'] == 0): ?>
+                            <!-- Если новая (0), показываем галочку для завершения -->
                             <form action="add_task.php" method="POST" style="display:inline;">
                                 <input type="hidden" name="id" value="<?= $task['id'] ?>">
-                                <button type="submit" name="action" value="complete" class="btn-success">✔</button>
+                                <button type="submit" name="action" value="complete" class="btn-success" title="Выполнить">✔</button>
                             </form>
                         <?php else: ?>
+                            <!-- Если выполненная (1), показываем стрелку для возврата -->
                             <form action="add_task.php" method="POST" style="display:inline;">
                                 <input type="hidden" name="id" value="<?= $task['id'] ?>">
-                                <button type="submit" name="action" value="reopen" class="btn-warning">↺</button>
+                                <button type="submit" name="action" value="reopen" class="btn-warning" title="Вернуть в работу">↺</button>
                             </form>
                         <?php endif; ?>
                         
                         <form action="add_task.php" method="POST" style="display:inline;" onsubmit="return confirm('Удалить задачу?');">
                             <input type="hidden" name="id" value="<?= $task['id'] ?>">
-                            <button type="submit" name="action" value="delete" class="btn-danger">✖</button>
+                            <button type="submit" name="action" value="delete" class="btn-danger" title="Удалить">✖</button>
                         </form>
                     </div>
                 </li>

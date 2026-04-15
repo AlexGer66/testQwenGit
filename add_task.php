@@ -9,16 +9,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $description = trim($_POST['description'] ?? '');
         
         if (!empty($title)) {
-            $stmt = $pdo->prepare("INSERT INTO tasks (title, description) VALUES (?, ?)");
+            // Новая задача сразу со статусом 0
+            $stmt = $pdo->prepare("INSERT INTO tasks (title, description, status) VALUES (?, ?, 0)");
             $stmt->execute([$title, $description]);
         }
     } elseif ($action === 'complete') {
         $id = (int)$_POST['id'];
-        $stmt = $pdo->prepare("UPDATE tasks SET status = 'done' WHERE id = ?");
+        // Ставим статус 1 (выполнена)
+        $stmt = $pdo->prepare("UPDATE tasks SET status = 1 WHERE id = ?");
         $stmt->execute([$id]);
     } elseif ($action === 'reopen') {
         $id = (int)$_POST['id'];
-        $stmt = $pdo->prepare("UPDATE tasks SET status = 'pending' WHERE id = ?");
+        // Возвращаем статус 0 (новая)
+        $stmt = $pdo->prepare("UPDATE tasks SET status = 0 WHERE id = ?");
         $stmt->execute([$id]);
     } elseif ($action === 'delete') {
         $id = (int)$_POST['id'];
