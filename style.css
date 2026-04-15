@@ -1,0 +1,23 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 20px;
+}
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+h1 { text-align: center; color: #333; }
+.task-form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.task-form input, .task-form textarea { padding: 10px; border: 1px solid #ddd; border-radius: 4px; }
+.task-form button { padding: 10px; background: #28a745; color: #fff; border: none; cursor: pointer; border-radius: 4px; }
+.task-form button:hover { background: #218838; }
+.task-list { list-style: none; padding: 0; }
+.task-item { border-bottom: 1px solid #eee; padding: 10px 0; }
+.task-item.done strong { text-decoration: line-through; color: #888; }
+small { color: #999; }
