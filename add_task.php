@@ -3,13 +3,13 @@ require_once 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $action = $_POST['action'] ?? '';
-    
+
     if ($action === 'add') {
         $title = trim($_POST['title']);
-        $description = trim($_POST['description']);
+        $description = trim($_POST['description'] ?? '');
         
         if (!empty($title)) {
-            $stmt = $pdo->prepare("INSERT INTO tasks (title, description, status) VALUES (?, ?, 'pending')");
+            $stmt = $pdo->prepare("INSERT INTO tasks (title, description) VALUES (?, ?)");
             $stmt->execute([$title, $description]);
         }
     } elseif ($action === 'complete') {
@@ -27,8 +27,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Возвращаемся на главную страницу с сохранением фильтра (если был)
-$filter = isset($_GET['filter']) ? '?filter=' . $_GET['filter'] : '';
-header("Location: index.php" . $filter);
+header("Location: index.php");
 exit;
-?>
