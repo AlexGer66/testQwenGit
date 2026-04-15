@@ -1,86 +1,234 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
     margin: 0;
     padding: 20px;
+    color: #333;
 }
+
 .container {
     max-width: 800px;
     margin: 0 auto;
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
-h1 { text-align: center; color: #333; }
 
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 30px;
+}
+
+/* Фильтры */
 .filters {
     text-align: center;
-    margin-bottom: 20px;
-}
-.btn {
-    display: inline-block;
-    padding: 8px 16px;
-    margin: 0 5px;
-    text-decoration: none;
-    background: #e0e0e0;
-    color: #333;
-    border-radius: 4px;
-    transition: background 0.3s;
-    border: none;
-    cursor: pointer;
-}
-.btn:hover, .btn.active {
-    background: #007bff;
-    color: white;
+    margin-bottom: 25px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
 }
 
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 0 5px;
+    text-decoration: none;
+    background: #e9ecef;
+    color: #495057;
+    border-radius: 20px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #dee2e6;
+    transform: translateY(-1px);
+}
+
+.btn.active {
+    background: #007bff;
+    color: white;
+    box-shadow: 0 2px 5px rgba(0,123,255,0.3);
+}
+
+/* Форма добавления */
 .task-form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
+    gap: 12px;
+    margin-bottom: 30px;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
 }
-.task-form input, .task-form textarea {
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+
+.task-form input, 
+.task-form textarea {
+    padding: 12px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 16px;
+    font-family: inherit;
+    transition: border-color 0.2s;
 }
-.task-form button {
-    padding: 10px;
+
+.task-form input:focus, 
+.task-form textarea:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+}
+
+.task-form button[type="submit"][name="action"][value="add"] {
+    padding: 12px;
     background: #28a745;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
+    transition: background 0.2s;
 }
-.task-form button:hover { background: #218838; }
 
-.task-list { list-style: none; padding: 0; }
+.task-form button[type="submit"][name="action"][value="add"]:hover {
+    background: #218838;
+}
+
+/* Список задач */
+.task-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
 .task-item {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    border-bottom: 1px solid #eee;
+    align-items: flex-start;
+    padding: 20px;
+    margin-bottom: 15px;
+    background: #fff;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    transition: all 0.2s;
 }
+
+.task-item:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border-color: #dee2e6;
+}
+
+/* Стили для ВЫПОЛНЕННЫХ задач - самое важное! */
+.task-item.completed {
+    background-color: #f8f9fa;
+    opacity: 0.7;
+    border-left: 4px solid #28a745;
+}
+
 .task-item.completed .task-content h3 {
     text-decoration: line-through;
-    color: #888;
+    color: #6c757d;
 }
-.task-content h3 { margin: 0 0 5px; }
-.task-content p { margin: 0 0 5px; color: #666; }
-.task-content small { color: #999; }
 
-.task-actions form { display: inline; }
-.btn-success { background: #28a745; color: white; }
-.btn-warning { background: #ffc107; color: #333; }
-.btn-danger { background: #dc3545; color: white; }
-.task-actions button {
-    padding: 5px 10px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-left: 5px;
+.task-item.completed .task-content p {
+    color: #adb5bd;
+    text-decoration: line-through;
 }
-.empty-message { text-align: center; color: #777; margin-top: 20px; }
+
+.task-content h3 {
+    margin: 0 0 8px;
+    color: #2c3e50;
+    font-size: 18px;
+}
+
+.task-content p {
+    margin: 0 0 10px;
+    color: #555;
+    line-height: 1.5;
+}
+
+.task-content small {
+    color: #999;
+    font-size: 12px;
+    display: block;
+    margin-top: 5px;
+}
+
+/* Кнопки действий */
+.task-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+    margin-left: 15px;
+}
+
+.task-actions form {
+    display: inline;
+}
+
+.task-actions button {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: transform 0.1s, opacity 0.2s;
+    padding: 0;
+}
+
+.task-actions button:hover {
+    transform: scale(1.1);
+    opacity: 0.9;
+}
+
+.btn-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+.btn-success:hover {
+    background-color: #c3e6cb;
+}
+
+.btn-warning {
+    background-color: #fff3cd;
+    color: #856404;
+}
+.btn-warning:hover {
+    background-color: #ffeeba;
+}
+
+.btn-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+.btn-danger:hover {
+    background-color: #f5c6cb;
+}
+
+.empty-message {
+    text-align: center;
+    color: #6c757d;
+    padding: 40px;
+    font-style: italic;
+}
+
+/* Адаптивность для мобильных */
+@media (max-width: 600px) {
+    .task-item {
+        flex-direction: column;
+    }
+    .task-actions {
+        width: 100%;
+        justify-content: flex-end;
+        margin-left: 0;
+        margin-top: 15px;
+    }
+}
